@@ -9,4 +9,4 @@ twitter_username: noelmcgrath
 github_username:  noelmcgrath
 
 # Build settings
-markdown: kramdown
+markdown: redcarpet

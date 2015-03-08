@@ -1,25 +1,24 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
+title:  "Building F# 3.0 projects on a build server"
 date:   2015-03-07 15:31:10
-categories: jekyll update
+
 ---
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve --watch`, which launches a web server and auto-regenerates your site when a file is updated.
+We have started building a project where our solution contains both c# and F# projects. The solution built local as Visual Studio(2012) has all the bits required.
 
-To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+When we tried to build on the build server it failed because Visual Studio is not installed here and there was no F# tools installed.
 
-Jekyll also offers powerful support for code snippets:
+So you need to install this from [here][F#tools]. As of now this is Visual F# Tools 3.1.2
 
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
+Once this is installed we done a build again and it failed. The reason for this is because the fsproj file expects to find the F# dll in this location:
 
-Check out the [Jekyll docs][jekyll] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll’s dedicated Help repository][jekyll-help].
+`"$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets" Condition=" Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')"`
 
-[jekyll]:      http://jekyllrb.com
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-help]: https://github.com/jekyll/jekyll-help
+However the 3.0 folder is not present on the build server - it is 3.1 as we installed Visual F# tools 3.1.2
+
+
+To get this to work we created a 3.0 folder in the same location as 3.1 and copied all the content from the 3.1 folder into it.
+
+This results in our build server sucessfully building the project and with no change to our fsproj, Visual Studio also continues to build on local development machines as we had to make no changes to fsproj file.
+
+[F#tools]:      http://www.microsoft.com/en-us/download/details.aspx?id=44011

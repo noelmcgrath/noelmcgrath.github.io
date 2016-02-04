@@ -1,2 +1,3 @@
 # noelmcgrath.github.io
-My reposiory
+My [blog][link]
+[link]:     http://noelmcgrath.github.io/

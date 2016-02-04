@@ -41,7 +41,7 @@ tar -zxvf mydirectory.tar.gz  -C /home/newdirectory
 I need to compress a graphite metrics directory to make available elsewhere
 
 ```bash
-$ cd /var/graphite && tar -zcvf graphitestorage.tar.gz /var/graphite/storage
+$ cd /var/graphite && tar -zcvf graphitestorage.tar.gz storage
 
 # => Move file the new machine via scp
 

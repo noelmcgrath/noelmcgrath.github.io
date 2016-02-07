@@ -43,13 +43,14 @@ I need to compress a graphite metrics directory to make available elsewhere
 ```bash
 $ cd /var/graphite && tar -zcvf graphitestorage.tar.gz storage
 
-# => Move file the new machine via scp
+# => Move file to the new machine via scp
 
 ```
 
 Now on new host uncompress directory
 
 ```bash
+$ mkdir /var/graphite
 $ tar -zxvf graphitestorage.tar.gz -C /var/graphite
 
 ```
